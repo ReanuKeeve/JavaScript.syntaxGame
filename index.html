@@ -1,59 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code Tactics</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Tactics</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <h1>Code Tactics</h1>
+      <div class="stats">
+        <span id="streak">🔥 Streak: <span id="streak-value">0</span></span>
+        <span id="rating">⭐ Rating: <span id="rating-value">400</span></span>
+      </div>
+    </header>
 
-  <header class="top-bar">
-    <h1>Code Tactics</h1>
-    <div class="stats">
-      <span id="streak">🔥 Streak: <span id="streak-value">0</span></span>
-      <span id="rating">⭐ Rating: <span id="rating-value">400</span></span>
-    </div>
-  </header>
+    <main class="arena">
+      <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span id="toast-text"></span>
+</div>
+      <!-- Puzzle description -->
+      <section class="prompt">
+        <h2>Find the Best Move</h2>
+        <p id="prompt">Return an array of user names.</p>
+      </section>
 
-  <main class="arena">
-
-    <!-- Puzzle description -->
-    <section class="prompt">
-      <h2>Find the Best Move</h2>
-      <p  id="prompt">Return an array of user names.</p>
-    </section>
-
-    <!-- Code "board" -->
-    <section class="board" id="board">
-      <pre><code>
+      <!-- Code "board" -->
+      <section class="board" id="board">
+        <pre><code>
 const users = [
   { name: "Alice" },
   { name: "Bob" }
 ];
       </code></pre>
-    </section>
+      </section>
 
-    <!-- Move choices -->
-    <section class="moves" id="moves-btn">
-      <button class="move">users.map(u =&gt; u.name)</button>
-      <button class="move">users.filter(u =&gt; u.name)</button>
-      <button class="move">users.forEach(u =&gt; u.name)</button>
-      <button class="move">users.reduce(u =&gt; u.name)</button>
-    </section>
+      <!-- Move choices -->
+      <section class="moves" id="moves-btn">
+        <button class="move">users.map(u =&gt; u.name)</button>
+        <button class="move">users.filter(u =&gt; u.name)</button>
+        <button class="move">users.forEach(u =&gt; u.name)</button>
+        <button class="move">users.reduce(u =&gt; u.name)</button>
+      </section>
 
-    <!-- Feedback area -->
-    <section class="feedback">
-      <p>Select the best move.</p>
-    </section>
+      <!-- Feedback area -->
+      <section class="feedback">
+        <p>Select the best move.</p>
+      </section>
 
-    <!-- Controls -->
-    <section class="controls">
-      <button class="secondary" id="hint-btn">Hint</button>
-      <button class="primary" id="next-btn">Next Puzzle</button>
-    </section>
-
-  </main>
-  <script src="script.js"></script>
-</body>
+      <!-- Controls -->
+      <section class="controls">
+        <button class="secondary" id="hint-btn">Hint</button>
+        <button class="primary" id="next-btn">Next Puzzle</button>
+      </section>
+    </main>
+    <!-- Feedback Modal -->
+    <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <h3 id="modal-title">Result</h3>
+        <p id="modal-message">...</p>
+        <div class="modal-actions">
+          <button class="primary" id="modal-ok-btn" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>

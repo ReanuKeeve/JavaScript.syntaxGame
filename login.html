@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Code Tactics</title>
+    <link rel="stylesheet" href="login.css" />
+    <script src="login.js" defer></script>
+  </head>
+  <body>
+    <main class="login-page">
+      <section class="login-card" aria-labelledby="login-title">
+        <h1 id="login-title">Welcome Back</h1>
+        <p class="subtitle">Sign in to continue your JavaScript challenge streak.</p>
+
+        <form class="login-form" id="login-form" action="#" method="post" novalidate>
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          />
+          <p class="field-error" id="email-error" aria-live="polite"></p>
+
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+          <p class="field-error" id="password-error" aria-live="polite"></p>
+
+          <div class="form-row">
+            <label class="remember">
+              <input type="checkbox" name="remember" id="remember" />
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="inline-link">Forgot password?</a>
+          </div>
+
+          <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+
+          <button type="submit" id="login-btn">Log In</button>
+        </form>
+
+        <p class="signup">
+          New here?
+          <a href="#" class="inline-link">Create an account</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
