@@ -1,4 +1,5 @@
 const AUTH_STORAGE_KEY = "codeTacticsAuth";
+const USERS_STORAGE_KEY = "codeTacticsUsers";
 const MIN_PASSWORD_LENGTH = 6;
 const REDIRECT_PAGE = "index.html";
 
@@ -11,18 +12,34 @@ const passwordError = document.getElementById("password-error");
 const formMessage = document.getElementById("form-message");
 const loginButton = document.getElementById("login-btn");
 
-function loadAuth() {
+function safeParse(raw, fallback) {
   try {
-    const localAuth = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (localAuth) return JSON.parse(localAuth);
-
-    const sessionAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
-    if (sessionAuth) return JSON.parse(sessionAuth);
+    return JSON.parse(raw);
   } catch {
-    return null;
+    return fallback;
   }
+}
+
+function loadAuth() {
+  const localAuth = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (localAuth) return safeParse(localAuth, null);
+
+  const sessionAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
+  if (sessionAuth) return safeParse(sessionAuth, null);
 
   return null;
+}
+
+function loadUsers() {
+  const usersRaw = localStorage.getItem(USERS_STORAGE_KEY);
+  const users = safeParse(usersRaw, []);
+
+  if (!Array.isArray(users)) return [];
+  return users.filter((user) => user?.email && user?.password);
+}
+
+function normalizeEmail(value) {
+  return value.trim().toLowerCase();
 }
 
 function clearMessages() {
@@ -51,9 +68,10 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-function saveAuth(email, rememberMe) {
+function saveAuth(user, rememberMe) {
   const payload = {
-    email,
+    email: user.email,
+    name: user.name ?? "",
     loggedInAt: new Date().toISOString(),
   };
 
@@ -67,15 +85,41 @@ function saveAuth(email, rememberMe) {
   localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 
+function getUserByEmail(email) {
+  const users = loadUsers();
+  const normalizedEmail = normalizeEmail(email);
+  return users.find((user) => normalizeEmail(user.email) === normalizedEmail);
+}
+
+function hydrateFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const prefillEmail = params.get("email");
+  const registered = params.get("registered");
+
+  if (prefillEmail && isValidEmail(prefillEmail)) {
+    emailInput.value = prefillEmail;
+  }
+
+  if (registered === "1") {
+    showFormMessage("Account created. Please sign in.", "success");
+  }
+
+  if (prefillEmail || registered) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
 if (loadAuth()) {
   window.location.href = REDIRECT_PAGE;
 }
+
+hydrateFromQuery();
 
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
   clearMessages();
 
-  const email = emailInput.value.trim();
+  const email = normalizeEmail(emailInput.value);
   const password = passwordInput.value;
   const rememberMe = rememberInput.checked;
 
@@ -106,11 +150,24 @@ form?.addEventListener("submit", (event) => {
     return;
   }
 
+  const user = getUserByEmail(email);
+  if (!user) {
+    showFieldError(emailInput, emailError, "No account found for this email.");
+    showFormMessage("Create an account first, then log in.", "error");
+    return;
+  }
+
+  if (user.password !== password) {
+    showFieldError(passwordInput, passwordError, "Incorrect password.");
+    showFormMessage("Email/password did not match.", "error");
+    return;
+  }
+
   loginButton.disabled = true;
   loginButton.textContent = "Signing in...";
 
   try {
-    saveAuth(email, rememberMe);
+    saveAuth(user, rememberMe);
     showFormMessage("Login successful. Redirecting...", "success");
 
     setTimeout(() => {

@@ -1,0 +1,177 @@
+:root {
+  --bg: #0f1220;
+  --panel: #1b1f3a;
+  --accent: #00e5ff;
+  --text: #ffffff;
+  --muted: #9aa0c3;
+  --field: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.16);
+  --bad: #ff6b7d;
+  --good: #28d997;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(40, 217, 151, 0.12), transparent 35%),
+    radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.13), transparent 40%),
+    var(--bg);
+}
+
+.register-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.register-card {
+  width: min(460px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
+}
+
+h1 {
+  color: var(--accent);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.45;
+}
+
+.register-form {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  font-size: 0.95rem;
+  color: #d9ddf1;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--field);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input::placeholder {
+  color: #8a90b3;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2);
+}
+
+input.input-error {
+  border-color: var(--bad);
+  box-shadow: 0 0 0 3px rgba(255, 107, 125, 0.2);
+}
+
+.terms {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.terms input {
+  accent-color: var(--accent);
+}
+
+.field-error {
+  min-height: 16px;
+  margin-top: -8px;
+  font-size: 0.85rem;
+  color: var(--bad);
+}
+
+.form-message {
+  min-height: 20px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.form-message.error {
+  color: var(--bad);
+}
+
+.form-message.success {
+  color: var(--good);
+}
+
+button {
+  margin-top: 4px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #051319;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.12s;
+}
+
+button:hover {
+  filter: brightness(1.05);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.signin {
+  margin-top: 18px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.inline-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.inline-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 24px 18px;
+  }
+}

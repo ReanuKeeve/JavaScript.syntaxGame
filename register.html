@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | Code Tactics</title>
+    <link rel="stylesheet" href="register.css" />
+    <script src="register.js" defer></script>
+  </head>
+  <body>
+    <main class="register-page">
+      <section class="register-card" aria-labelledby="register-title">
+        <h1 id="register-title">Create Account</h1>
+        <p class="subtitle">Set up your profile and start training your JavaScript instincts.</p>
+
+        <form class="register-form" id="register-form" action="#" method="post" novalidate>
+          <label for="name">Display Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Your name"
+            autocomplete="name"
+            required
+          />
+          <p class="field-error" id="name-error" aria-live="polite"></p>
+
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          />
+          <p class="field-error" id="email-error" aria-live="polite"></p>
+
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="At least 6 characters"
+            autocomplete="new-password"
+            required
+          />
+          <p class="field-error" id="password-error" aria-live="polite"></p>
+
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            id="confirm-password"
+            name="confirm-password"
+            type="password"
+            placeholder="Re-enter password"
+            autocomplete="new-password"
+            required
+          />
+          <p class="field-error" id="confirm-password-error" aria-live="polite"></p>
+
+          <label class="terms" for="terms">
+            <input id="terms" name="terms" type="checkbox" required />
+            <span>I agree to the project demo terms.</span>
+          </label>
+          <p class="field-error" id="terms-error" aria-live="polite"></p>
+
+          <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+
+          <button type="submit" id="register-btn">Create Account</button>
+        </form>
+
+        <p class="signin">
+          Already have an account?
+          <a href="login.html" class="inline-link">Log in</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
